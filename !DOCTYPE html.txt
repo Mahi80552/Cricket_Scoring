@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Scoring Interface</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Cricket Match Scoring</h1>
+        <div id="match-details">
+            <label for="teamA">Team A Name:</label>
+            <input type="text" id="teamA" placeholder="Team A">
+            <label for="teamB">Team B Name:</label>
+            <input type="text" id="teamB" placeholder="Team B">
+            <label for="overs">Overs per Innings:</label>
+            <select id="overs">
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
+            <button id="start-match">Start Match</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="scoring-interface">
+            <div id="scoreboard">
+                <h2>Scoreboard</h2>
+                <p id="current-score">Total: 0/0</p>
+                <p id="runs-per-over">RPO: 0.00</p>
+                <p id="fall-of-wickets">FOW:</p>
+                <p id="current-batsman">Batsman: -</p>
+                <p id="partnership">Partnership: 0</p>
+            </div>
+
+            <div id="scoring-controls">
+                <button onclick="scoreRun(1)">1 Run</button>
+                <button onclick="scoreRun(2)">2 Runs</button>
+                <button onclick="scoreRun(3)">3 Runs</button>
+                <button onclick="scoreRun(4)">4 Runs</button>
+                <button onclick="scoreRun(6)">6 Runs</button>
+                <button onclick="scoreExtra('wide')">Wide</button>
+                <button onclick="scoreExtra('noBall')">No Ball</button>
+                <button onclick="scoreOut('caught')">Out - Caught</button>
+                <button onclick="scoreOut('bowled')">Out - Bowled</button>
+                <button onclick="scoreOut('runOut')">Out - Run Out</button>
+                <button onclick="undoAction()">Undo</button>
+                <button onclick="redoAction()">Redo</button>
+            </div>
+        </section>
+
+        <section id="match-summary">
+            <h2>Innings Summary</h2>
+            <p id="inning-summary">Total Runs: 0</p>
+            <p id="top-scorer">Top Scorer: -</p>
+            <p id="best-bowler">Best Bowler: -</p>
+        </section>
+    </main>
+
+    <footer>
+        <button id="end-match">End Match</button>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

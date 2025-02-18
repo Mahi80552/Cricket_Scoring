@@ -1,0 +1,53 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header, main, footer {
+    margin: 20px;
+    padding: 10px;
+}
+
+#match-details input, #match-details select {
+    margin: 5px;
+    padding: 8px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#scoring-controls button {
+    width: 120px;
+}
+
+#scoreboard {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+#match-summary {
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+}
+
+#fall-of-wickets, #partnership {
+    font-weight: bold;
+}

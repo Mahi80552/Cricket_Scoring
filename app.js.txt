@@ -1,0 +1,91 @@
+// app.js
+let currentScore = 0;
+let wickets = 0;
+let currentBatsmanScore = 0;
+let partnershipRuns = 0;
+let fallOfWickets = [];
+let actionsHistory = [];
+let actionIndex = -1;
+
+function scoreRun(runs) {
+    currentScore += runs;
+    currentBatsmanScore += runs;
+    partnershipRuns += runs;
+    updateScoreboard();
+    recordAction('score', { runs });
+}
+
+function scoreExtra(type) {
+    if (type === 'wide' || type === 'noBall') {
+        currentScore += 1;
+    } else if (type === 'byes' || type === 'legByes') {
+        currentScore += 1;
+    }
+    updateScoreboard();
+    recordAction('extra', { type });
+}
+
+function scoreOut(dismissalType) {
+    wickets += 1;
+    fallOfWickets.push(`Wicket: ${dismissalType} - ${currentBatsmanScore} runs`);
+    currentBatsmanScore = 0; // Reset batsman score
+    updateScoreboard();
+    recordAction('out', { dismissalType });
+}
+
+function undoAction() {
+    if (actionIndex >= 0) {
+        const lastAction = actionsHistory[actionIndex];
+        if (lastAction.type === 'score') {
+            currentScore -= lastAction.data.runs;
+        } else if (lastAction.type === 'extra') {
+            if (lastAction.data.type === 'wide' || lastAction.data.type === 'noBall') {
+                currentScore -= 1;
+            }
+        } else if (lastAction.type === 'out') {
+            wickets -= 1;
+            fallOfWickets.pop();
+        }
+        actionIndex--;
+        updateScoreboard();
+    }
+}
+
+function redoAction() {
+    if (actionIndex < actionsHistory.length - 1) {
+        actionIndex++;
+        const nextAction = actionsHistory[actionIndex];
+        if (nextAction.type === 'score') {
+            currentScore += nextAction.data.runs;
+        } else if (nextAction.type === 'extra') {
+            if (nextAction.data.type === 'wide' || nextAction.data.type === 'noBall') {
+                currentScore += 1;
+            }
+        } else if (nextAction.type === 'out') {
+            wickets += 1;
+            fallOfWickets.push(`Wicket: ${nextAction.data.dismissalType} - ${currentBatsmanScore} runs`);
+        }
+        updateScoreboard();
+    }
+}
+
+function recordAction(type, data) {
+    actionsHistory.push({ type, data });
+    actionIndex++;
+}
+
+function updateScoreboard() {
+    document.getElementById('current-score').textContent = `Total: ${currentScore}/${wickets}`;
+    document.getElementById('runs-per-over').textContent = `RPO: ${(currentScore / 6).toFixed(2)}`;
+    document.getElementById('fall-of-wickets').textContent = `FOW: ${fallOfWickets.join(", ")}`;
+    document.getElementById('current-batsman').textContent = `Batsman: ${currentBatsmanScore} runs`;
+    document.getElementById('partnership').textContent = `Partnership: ${partnershipRuns} runs`;
+}
+
+document.getElementById('start-match').addEventListener('click', function() {
+    alert('Match Started!');
+});
+
+document.getElementById('end-match').addEventListener('click', function() {
+    alert('Match Ended!');
+});
